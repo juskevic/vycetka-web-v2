@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {ShieldQuestion, Stars, Download, ArrowRight} from "lucide-react";
+import {Stars, Download, ArrowRight} from "lucide-react";
 import Image from "next/image";
 
 export default function LandingPage() {
@@ -15,11 +15,11 @@ export default function LandingPage() {
                     </p>
                 </div>
                 <div className="flex flex-row justify-center gap-2">
-                    <Button variant="ghost" className="rounded-full">
-                        Co je nového? <Stars size={25} />
+                    <Button variant="default" className="rounded-full">
+                        Stáhnout <Download size={25} />
                     </Button>
-                    <Button variant="ghost" className="rounded-full">
-                        Ochrana soukromí <ShieldQuestion size={25} />
+                    <Button variant="secondary" className="rounded-full">
+                        Co je nového? <Stars size={25} />
                     </Button>
                 </div>
             </div>

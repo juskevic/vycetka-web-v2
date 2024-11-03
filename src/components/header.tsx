@@ -18,12 +18,12 @@ export default function Header() {
 
     return (
         <header className="hidden sm:block">
-            <div className="sticky z-50 flex flex-row justify-evenly p-3 bg-black">
+            <div className="sticky z-50 flex flex-row justify-evenly p-3 bg-black bg-opacity-20">
                 <div className="flex flex-rowjustify-start">
                     <Link href="/" className={`${digitalCards.className} text-lg font-bold my-auto`}>Výčetka</Link>
                 </div>
                 <div className="flex flex-row justify-end my-auto gap-2">
-                    <Button variant="default" size="default" className="rounded-full">
+                    <Button variant="outline" size="default" className="rounded-full">
                         Webová verze <ArrowRight size="20"/>
                     </Button>
                 </div>
