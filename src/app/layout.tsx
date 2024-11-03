@@ -13,7 +13,9 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <html lang="en">
         <body className={`dark`}>
         <Header/>
-        {children}
+        <div className="xl:p-40">
+            {children}
+        </div>
         </body>
         </html>
     );

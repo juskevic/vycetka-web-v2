@@ -4,7 +4,6 @@ import Link from 'next/link'
 import {ArrowRight, Download} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import localFont from 'next/font/local'
-import Image from 'next/image'
 
 const digitalCards = localFont({
     src: [
@@ -19,9 +18,8 @@ export default function Header() {
 
     return (
         <header>
-            <div className="sticky z-50 flex flex-row justify-evenly p-1 bg-black">
+            <div className="sticky z-50 flex flex-row justify-evenly p-3 bg-black">
                 <div className="flex flex-rowjustify-start">
-                    <Image src="/icon.png" alt="Vycetka logo" width={70} height={70} />
                     <Link href="/" className={`${digitalCards.className} text-lg font-bold my-auto`}>Výčetka</Link>
                 </div>
                 <div className="flex flex-row justify-end my-auto gap-2">
