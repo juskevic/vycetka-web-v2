@@ -15,11 +15,11 @@ export default function LandingPage() {
                     </p>
                 </div>
                 <div className="flex flex-row justify-center gap-2">
-                    <Button variant="outline" className="rounded-full">
-                        Co je nového? <Stars className="ml-2" size={25} />
+                    <Button variant="ghost" className="rounded-full">
+                        Co je nového? <Stars size={25} />
                     </Button>
                     <Button variant="ghost" className="rounded-full">
-                        Ochrana soukromí <ShieldQuestion className="ml-2" size={25} />
+                        Ochrana soukromí <ShieldQuestion size={25} />
                     </Button>
                 </div>
             </div>
