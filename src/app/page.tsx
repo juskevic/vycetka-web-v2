@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ShieldQuestion, Stars, Download } from "lucide-react";
+import {ShieldQuestion, Stars, Download, ArrowRight} from "lucide-react";
 import Image from "next/image";
 
 export default function LandingPage() {
@@ -15,7 +15,7 @@ export default function LandingPage() {
                     </p>
                 </div>
                 <div className="flex flex-row justify-center gap-2">
-                    <Button variant="default" className="rounded-full">
+                    <Button variant="outline" className="rounded-full">
                         Co je nového? <Stars className="ml-2" size={25} />
                     </Button>
                     <Button variant="ghost" className="rounded-full">
@@ -37,11 +37,14 @@ export default function LandingPage() {
                     <h2 className="text-2xl font-bold text-gray-100 text-center md:text-left">
                         {"Stáhněte si Výčetku"}
                     </h2>
-                    <Button variant="outline" className="rounded-full w-full md:w-auto">
+                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-auto">
                         Google Play <Download className="ml-2" size={20} />
                     </Button>
-                    <Button variant="outline" className="rounded-full w-full md:w-auto">
+                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-auto">
                         App Store <Download className="ml-2" size={20} />
+                    </Button>
+                    <Button variant="outline" className="text-base rounded-full w-full md:w-auto">
+                        Webová verze <ArrowRight size="20"/>
                     </Button>
                 </div>
             </div>

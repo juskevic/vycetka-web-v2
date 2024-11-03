@@ -13,7 +13,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <html lang="en">
         <body className="dark">
         <Header/>
-        <div className="xl:p-40">
+        <div className="xl:p-20">
             {children}
         </div>
         </body>
