@@ -1,9 +1,10 @@
-import {Button} from "@/components/ui/button";
-import {ShieldQuestion, Stars} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ShieldQuestion, Stars, Download } from "lucide-react";
+import Image from "next/image";
 
 export default function LandingPage() {
     return (
-        <main>
+        <main className="space-y-40 py-16 px-4 md:px-6 lg:px-8">
             <div className="flex flex-col !text-center gap-8">
                 <div className="space-y-4">
                     <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-50 to-gray-200 bg-clip-text text-transparent">
@@ -14,14 +15,37 @@ export default function LandingPage() {
                     </p>
                 </div>
                 <div className="flex flex-row justify-center gap-2">
-                    <Button variant="outline" className="rounded-full">
-                        Co je nového? <Stars size={20} />
+                    <Button variant="default" className="rounded-full">
+                        Co je nového? <Stars className="ml-2" size={25} />
                     </Button>
                     <Button variant="ghost" className="rounded-full">
-                        Ochrana soukromí <ShieldQuestion size={20} />
+                        Ochrana soukromí <ShieldQuestion className="ml-2" size={25} />
                     </Button>
                 </div>
             </div>
+
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+                <div className="relative w-full max-w-[300px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl">
+                    <Image
+                        src="/placeholder.svg"
+                        alt="Výčetka app screenshot"
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </div>
+                <div className="flex flex-col gap-4">
+                    <h2 className="text-2xl font-bold text-gray-100 text-center md:text-left">
+                        {"Stáhněte si Výčetku"}
+                    </h2>
+                    <Button variant="outline" className="rounded-full w-full md:w-auto">
+                        Google Play <Download className="ml-2" size={20} />
+                    </Button>
+                    <Button variant="outline" className="rounded-full w-full md:w-auto">
+                        App Store <Download className="ml-2" size={20} />
+                    </Button>
+                </div>
+            </div>
+
         </main>
     )
 }
