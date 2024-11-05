@@ -1,15 +1,5 @@
 import Link from "next/link"
 import Image from "next/image"
-import localFont from "next/font/local";
-
-const digitalCards = localFont({
-    src: [
-        {
-            path: "../../public/fonts/DigitalCards-Demo.ttf",
-            weight: "400",
-        }
-    ]
-})
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()
