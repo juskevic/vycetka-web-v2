@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 import React from "react";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
     title: "Výčetka by Max Juškevič",
@@ -16,6 +17,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <div className="xl:p-20">
             {children}
         </div>
+        <Footer/>
         </body>
         </html>
     );
