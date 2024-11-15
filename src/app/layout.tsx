@@ -1,8 +1,8 @@
 import type {Metadata} from "next";
 import "./globals.css";
 import React from "react";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
+import DynamicHeader from "@/components/DynamicHeader";
 
 export const metadata: Metadata = {
     title: "Výčetka | Max Juškevič",
@@ -13,7 +13,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     return (
         <html lang="en">
         <body className="dark">
-        <Header/>
+        <DynamicHeader/>
         <div className="xl:p-20">
             {children}
         </div>
