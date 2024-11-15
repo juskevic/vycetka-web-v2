@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
+import {PanelRightOpen} from "lucide-react";
 
 const digitalCards = localFont({
     src: [
@@ -35,7 +36,9 @@ export default function VycetkaHeader() {
                 <div className="flex flex-row justify-end my-auto gap-2">
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant="outline">Open</Button>
+                            <Button variant="secondary" color="primary" className="rounded-full">
+                              <PanelRightOpen className="scale-150"/>
+                            </Button>
                         </SheetTrigger>
                         <SheetContent>
                             <SheetHeader>
