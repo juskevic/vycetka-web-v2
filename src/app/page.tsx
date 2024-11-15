@@ -1,9 +1,18 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import { Stars, Download, ArrowRight, CheckCircle, User } from "lucide-react";
 import Image from "next/image";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 export default function LandingPage() {
+
+    const handleScrollToSection = () => {
+        const element = document.getElementById('download');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll animation
+        }
+    };
+
     return (
         <main className="space-y-40 py-16 px-4 md:px-6 lg:px-8">
             <div className="flex flex-col !text-center gap-8 xl:pt-20">
@@ -16,17 +25,17 @@ export default function LandingPage() {
                     </p>
                 </div>
                 <div className="flex flex-row justify-center gap-2">
-                    <Button variant="default" className="rounded-full">
+                    <Button onClick={handleScrollToSection} variant="default" className="rounded-full">
                         Stáhnout <Download size={25}/>
                     </Button>
                     <Button variant="secondary" className="rounded-full">
-                        Co je nového? <Stars size={25}/>
+                        Webová verze <ArrowRight size="20"/>
                     </Button>
                 </div>
             </div>
 
             <div className="space-y-12">
-                <div className="flex flex-row justify-evenly flex-wrap">
+                <div className="flex flex-row justify-evenly flex-wrap gap-12">
                     {[
                         {
                             name: "Jan Novák",
@@ -70,7 +79,7 @@ export default function LandingPage() {
                 </p>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+            <div id="download" className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
                 <div className="relative w-full max-w-[300px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl">
                     <Image
                         src="/placeholder.svg"
