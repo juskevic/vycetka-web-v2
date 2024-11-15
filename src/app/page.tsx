@@ -1,8 +1,9 @@
 'use client';
 import { Button } from "@/components/ui/button";
-import { Stars, Download, ArrowRight, CheckCircle, User } from "lucide-react";
+import {Download, ArrowRight, CheckCircle, User, Info} from "lucide-react";
 import Image from "next/image";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 
 export default function LandingPage() {
 
@@ -88,17 +89,24 @@ export default function LandingPage() {
                         objectFit="cover"
                     />
                 </div>
-                <div className="flex flex-col gap-4">
-                    <h2 className="text-2xl font-bold text-gray-100 text-center md:text-left">
+                <div className="flex flex-col gap-4 !justify-center">
+                    <Alert className="md:w-2/3 w-full border-orange-300 text-orange-300">
+                        <Info className="!text-orange-300" size="20"/>
+                        <AlertTitle>Closed Testing</AlertTitle>
+                        <AlertDescription>
+                            V současné době probíhá uzavřené testování pro Google Play a App Store.
+                        </AlertDescription>
+                    </Alert>
+                    <h2 className="text-2xl font-bold text-gray-100 text-center w-full md:w-2/3">
                         {"Stáhněte si Výčetku"}
                     </h2>
-                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-auto">
+                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-2/3">
                         Google Play <Download className="ml-2" size={20}/>
                     </Button>
-                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-auto">
+                    <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-2/3">
                         App Store <Download className="ml-2" size={20}/>
                     </Button>
-                    <Button variant="outline" className="text-base rounded-full w-full md:w-auto">
+                    <Button variant="outline" className="text-base rounded-full w-full md:w-2/3">
                         Webová verze <ArrowRight size="20"/>
                     </Button>
                 </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import {ArrowRight, Stars} from 'lucide-react'
+import {Stars} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import localFont from 'next/font/local'
 
