@@ -1,18 +1,17 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent } from "@/components/ui/card"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from 'lucide-react'
+import ValidatedInput from "@/components/ValidatedInput";
 
 type Denomination = {
-    value: number | string
-    count: number
+    value: number | string;
+    count: number;
 }
 
 export default function BankNoteCalculator() {
+
     const initialDenominations: Denomination[] = [
         { value: 2000, count: 0 },
         { value: 1000, count: 0 },
@@ -31,8 +30,7 @@ export default function BankNoteCalculator() {
     const [denominations, setDenominations] = useState<Denomination[]>(initialDenominations)
     const [total, setTotal] = useState(0)
     const [revenue, setRevenue] = useState(0)
-    const [warning, setWarning] = useState("")
-    const [isSwitchOn, setIsSwitchOn] = useState(false) // Example switch state for max value condition
+    const [isSwitchOn, setIsSwitchOn] = useState(false)
 
     useEffect(() => {
         const newTotal = denominations.reduce((acc, curr) => {
@@ -45,44 +43,12 @@ export default function BankNoteCalculator() {
         setRevenue(newTotal - 6000)
     }, [denominations])
 
-    const handleInputChange = (index: number, value: string) => {
-        const maxValue = isSwitchOn ? 500 : 99;
-        if (value === '') {
-            const newDenominations = denominations.map((denom, i) =>
-                i === index ? { ...denom, count: 0 } : denom
-            )
-            setDenominations(newDenominations)
-            return;
-        }
-        const numValue = Number(value);
-        const isNumeric = /^\d+$/.test(value);
-
-        if (isNumeric) {
-            if (numValue > maxValue) {
-                setWarning(`Množství musí být nižší než ${maxValue}!`);
-                const newDenominations = denominations.map((denom, i) =>
-                    i === index ? { ...denom, count: maxValue } : denom
-                )
-                setDenominations(newDenominations);
-                return;
-            } else {
-                setWarning('');
-                const newDenominations = denominations.map((denom, i) =>
-                    i === index ? { ...denom, count: numValue } : denom
-                )
-                setDenominations(newDenominations);
-            }
-        } else {
-            setWarning('Povoleny jsou pouze čísla!');
-        }
-    }
-
     const formatCurrency = (value: number) => {
         return value.toLocaleString("cs-CZ", { style: "currency", currency: "CZK" }).replace(',00', '')
     }
 
     return (
-        <Card className="w-full max-w-4xl mx-auto pt-16">
+        <Card className="w-full max-w-4xl mx-auto pt-16 md:pt-0">
             <CardContent>
                 <Table className="text-base">
                     <TableHeader>
@@ -96,16 +62,18 @@ export default function BankNoteCalculator() {
                         {denominations.map((denom, index) => (
                             <TableRow key={index}>
                                 <TableCell className="whitespace-nowrap !text-center w-1/3">
-                                    {denom.value === "€" ? "€ (23 CZK)" : formatCurrency(typeof denom.value === 'number' ? denom.value : 0)}
+                                    {denom.value === "€" ? "€ (23 Kč)" : formatCurrency(typeof denom.value === 'number' ? denom.value : 0)}
                                 </TableCell>
                                 <TableCell>
-                                    <Input
-                                        type="number"
-                                        min="0"
-                                        max={isSwitchOn ? "500" : "99"}
-                                        value={denom.count === 0 ? '' : denom.count}
-                                        onChange={(e) => handleInputChange(index, e.target.value)}
-                                        className="w-20 mx-auto !text-center text-base"
+                                    <ValidatedInput
+                                        value={denom.count}
+                                        maxValue={isSwitchOn ? 500 : 99}
+                                        onChange={(newValue) => {
+                                            const updatedDenominations = denominations.map((denom, i) =>
+                                                i === index ? { ...denom, count: newValue } : denom
+                                            );
+                                            setDenominations(updatedDenominations);
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell className="w-1/3 !text-center">
@@ -115,23 +83,14 @@ export default function BankNoteCalculator() {
                         ))}
                     </TableBody>
                 </Table>
-
-                {warning && (
-                    <Alert variant="destructive" className="mt-4">
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>Warning</AlertTitle>
-                        <AlertDescription>{warning}</AlertDescription>
-                    </Alert>
-                )}
-
-                <div className="mt-6 space-y-2">
-                    <div className="flex justify-evenly">
-                        <span className="font-semibold">Total:</span>
-                        <span>{formatCurrency(total)}</span>
+                <div className="mt-6 space-y-2 text-xl">
+                    <div className="flex text-center justify-evenly">
+                        <span className="font-semibold w-1/2">Celkově</span>
+                        <span className="w-1/2">{formatCurrency(total)}</span>
                     </div>
-                    <div className="flex justify-evenly">
-                        <span className="font-semibold">Revenue:</span>
-                        <span>{formatCurrency(revenue)}</span>
+                    <div className="flex text-center justify-evenly">
+                        <span className="font-semibold w-1/2">Tržba</span>
+                        <span className="w-1/2">{formatCurrency(revenue)}</span>
                     </div>
                 </div>
             </CardContent>

@@ -3,6 +3,7 @@ import "./globals.css";
 import React from "react";
 import Footer from "@/components/footer";
 import DynamicHeader from "@/components/DynamicHeader";
+import {Toaster} from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
     title: "Výčetka | Max Juškevič",
@@ -18,6 +19,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
             {children}
         </div>
         <Footer/>
+        <Toaster/>
         </body>
         </html>
     );
