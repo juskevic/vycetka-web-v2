@@ -4,6 +4,7 @@ import React from "react";
 import Footer from "@/components/footer";
 import DynamicHeader from "@/components/DynamicHeader";
 import {Toaster} from "@/components/ui/toaster";
+import {SettingsProvider} from "../../contexts/SettingsContext";
 
 export const metadata: Metadata = {
     title: "Výčetka | Max Juškevič",
@@ -13,14 +14,16 @@ export const metadata: Metadata = {
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en">
-        <body className="dark">
-        <DynamicHeader/>
-        <div className="xl:p-20">
-            {children}
-        </div>
-        <Footer/>
-        <Toaster/>
-        </body>
+        <SettingsProvider>
+            <body className="dark">
+            <DynamicHeader/>
+            <div className="xl:p-20">
+                {children}
+            </div>
+            <Footer/>
+            <Toaster/>
+            </body>
+        </SettingsProvider>
         </html>
     );
 }

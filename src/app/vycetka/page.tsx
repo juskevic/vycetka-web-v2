@@ -1,16 +1,18 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Card, CardContent } from "@/components/ui/card"
+import { useState, useEffect } from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
 import ValidatedInput from "@/components/ValidatedInput";
+import { useSettings } from "../../../contexts/SettingsContext";
 
 type Denomination = {
     value: number | string;
     count: number;
-}
+};
 
 export default function BankNoteCalculator() {
+    const { settings } = useSettings(); // Get settings from SettingsContext
 
     const initialDenominations: Denomination[] = [
         { value: 2000, count: 0 },
@@ -25,27 +27,32 @@ export default function BankNoteCalculator() {
         { value: 2, count: 0 },
         { value: 1, count: 0 },
         { value: "€", count: 0 },
-    ]
+    ];
 
-    const [denominations, setDenominations] = useState<Denomination[]>(initialDenominations)
-    const [total, setTotal] = useState(0)
-    const [revenue, setRevenue] = useState(0)
-    const [isSwitchOn, setIsSwitchOn] = useState(false)
+    const [denominations, setDenominations] = useState<Denomination[]>(initialDenominations);
+    const [total, setTotal] = useState(0);
+    const [revenue, setRevenue] = useState(0);
 
     useEffect(() => {
+        const euroRate = parseFloat(settings.euroRate) || 1; // Use Euro rate from settings
+        const euroValue = denominations.find((d) => d.value === "€")?.count || 0;
+        const euroContribution = euroValue * euroRate;
+
         const newTotal = denominations.reduce((acc, curr) => {
-            if (curr.value === "€") {
-                return acc + curr.count * 23
-            }
-            return acc + (typeof curr.value === 'number' ? curr.value : 0) * curr.count
-        }, 0)
-        setTotal(newTotal)
-        setRevenue(newTotal - 6000)
-    }, [denominations])
+            if (curr.value === "€") return acc; // Skip Euro here; it's added separately
+            return acc + (typeof curr.value === "number" ? curr.value : 0) * curr.count;
+        }, euroContribution); // Include the Euro contribution separately here
+
+        const initialDeposit = parseInt(settings.initialDeposit || "6000", 10); // Use initial deposit from settings
+        setTotal(newTotal); // Total includes Euro contribution
+        setRevenue(newTotal - euroContribution - initialDeposit); // Revenue excludes the Euro contribution
+    }, [denominations, settings]);
 
     const formatCurrency = (value: number) => {
-        return value.toLocaleString("cs-CZ", { style: "currency", currency: "CZK" }).replace(',00', '')
-    }
+        return value.toLocaleString("cs-CZ", { style: "currency", currency: "CZK" }).replace(",00", "");
+    };
+
+    const totalEuro = denominations.find((d) => d.value === "€")?.count || 0;
 
     return (
         <Card className="w-full max-w-4xl mx-auto pt-16 md:pt-0">
@@ -62,12 +69,14 @@ export default function BankNoteCalculator() {
                         {denominations.map((denom, index) => (
                             <TableRow key={index}>
                                 <TableCell className="whitespace-nowrap !text-center w-1/3">
-                                    {denom.value === "€" ? "€ (23 Kč)" : formatCurrency(typeof denom.value === 'number' ? denom.value : 0)}
+                                    {denom.value === "€"
+                                        ? `€ (${settings.euroRate} Kč)`
+                                        : formatCurrency(typeof denom.value === "number" ? denom.value : 0)}
                                 </TableCell>
                                 <TableCell>
                                     <ValidatedInput
                                         value={denom.count}
-                                        maxValue={isSwitchOn ? 500 : 99}
+                                        maxValue={settings.increaseLimitTo500 ? 500 : 99} // Adjust max value based on settings
                                         onChange={(newValue) => {
                                             const updatedDenominations = denominations.map((denom, i) =>
                                                 i === index ? { ...denom, count: newValue } : denom
@@ -77,7 +86,11 @@ export default function BankNoteCalculator() {
                                     />
                                 </TableCell>
                                 <TableCell className="w-1/3 !text-center">
-                                    {formatCurrency(denom.value === "€" ? denom.count * 23 : (typeof denom.value === 'number' ? denom.value : 0) * denom.count)}
+                                    {formatCurrency(
+                                        denom.value === "€"
+                                            ? denom.count * parseFloat(settings.euroRate)
+                                            : (typeof denom.value === "number" ? denom.value : 0) * denom.count
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -86,14 +99,20 @@ export default function BankNoteCalculator() {
                 <div className="mt-6 space-y-2 text-xl">
                     <div className="flex text-center justify-evenly">
                         <span className="font-semibold w-1/2">Celkově</span>
-                        <span className="w-1/2">{formatCurrency(total)}</span>
+                        <span className="w-1/2">
+                            {formatCurrency(total)} {/* Includes Euro */}
+                        </span>
                     </div>
                     <div className="flex text-center justify-evenly">
                         <span className="font-semibold w-1/2">Tržba</span>
-                        <span className="w-1/2">{formatCurrency(revenue)}</span>
+                        <span className="w-1/2">
+                            {totalEuro > 0
+                                ? `${formatCurrency(revenue)} + ${totalEuro} €` // Revenue excludes Euro value
+                                : `${formatCurrency(revenue)}`}
+                        </span>
                     </div>
                 </div>
             </CardContent>
         </Card>
-    )
+    );
 }

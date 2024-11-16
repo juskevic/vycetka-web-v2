@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import localFont from 'next/font/local'
@@ -9,8 +7,10 @@ import {Label} from "@/components/ui/label";
 import {Info, Menu, Star} from "lucide-react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Switch} from "@/components/ui/switch";
-import {useEffect, useState} from "react";
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {Alert, AlertDescription} from "@/components/ui/alert";
+import {useSettings} from "../../../../contexts/SettingsContext";
+
+
 
 const digitalCards = localFont({
     src: [
@@ -23,23 +23,11 @@ const digitalCards = localFont({
 
 export default function VycetkaHeader() {
 
-    const [settings, setSettings] = useState({
-        increaseLimitTo500: false,
-        displayEuroSeparately: false,
-        euroRate: "24",
-        initialDeposit: "4000",
-        customDeposit: ""
-    })
+    const { settings, setSettings } = useSettings();
 
-    // Effect to save settings whenever they change
-    useEffect(() => {
-        // In a real application, you would save to localStorage or make an API call here
-        console.log("Settings saved:", settings)
-    }, [settings])
-
-    const handleSettingChange = (key: string, value: string | boolean) => {
-        setSettings(prev => ({...prev, [key]: value}))
-    }
+    const handleSettingChange = (key: keyof typeof settings, value: string | boolean) => {
+        setSettings((prev) => ({ ...prev, [key]: value }));
+    };
 
     return (
         <header className="fixed z-50 w-full bg-black">
@@ -66,22 +54,26 @@ export default function VycetkaHeader() {
                             <div className="grid gap-4 py-4">
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <Label htmlFor="increase-limit" className="text-sm sm:text-base">
-                                        Zvýšit limit na 500
+                                        Rozšířit číselný limit na 500
                                     </Label>
                                     <Switch
                                         id="increase-limit"
                                         checked={settings.increaseLimitTo500}
-                                        onCheckedChange={(checked) => handleSettingChange('increaseLimitTo500', checked)}
+                                        onCheckedChange={(checked) =>
+                                            handleSettingChange("increaseLimitTo500", checked)
+                                        }
                                     />
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <Label htmlFor="display-euro" className="text-sm sm:text-base">
-                                        Zobrazit Euro samostatně v Tržbě
+                                        Zobrazit zvlášť Euro v tržbě
                                     </Label>
                                     <Switch
                                         id="display-euro"
                                         checked={settings.displayEuroSeparately}
-                                        onCheckedChange={(checked) => handleSettingChange('displayEuroSeparately', checked)}
+                                        onCheckedChange={(checked) =>
+                                            handleSettingChange("displayEuroSeparately", checked)
+                                        }
                                     />
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -91,7 +83,7 @@ export default function VycetkaHeader() {
                                     <Select
                                         required
                                         value={settings.euroRate}
-                                        onValueChange={(value) => handleSettingChange('euroRate', value)}
+                                        onValueChange={(value) => handleSettingChange("euroRate", value)}
                                     >
                                         <SelectTrigger className="w-full sm:w-[180px]">
                                             <SelectValue placeholder="Vyberte kurz"/>
@@ -112,7 +104,7 @@ export default function VycetkaHeader() {
                                     <Select
                                         required
                                         value={settings.initialDeposit}
-                                        onValueChange={(value) => handleSettingChange('initialDeposit', value)}
+                                        onValueChange={(value) => handleSettingChange("initialDeposit", value)}
                                     >
                                         <SelectTrigger className="w-full sm:w-[180px]">
                                             <SelectValue placeholder="Vyberte částku"/>
