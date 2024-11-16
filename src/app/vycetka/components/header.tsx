@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {PanelRightOpen} from "lucide-react";
+import {Menu} from "lucide-react";
 
 const digitalCards = localFont({
     src: [
@@ -31,18 +31,20 @@ export default function VycetkaHeader() {
         <header className="fixed z-50 w-full bg-black">
             <div className="sticky z-50 flex flex-row justify-evenly p-3">
                 <div className="flex flex-rowjustify-start">
-                    <Link href="/" className={`${digitalCards.className} text-base md:text-lg font-bold my-auto`}>Výčetka</Link>
+                    <Link href="/" className={`${digitalCards.className} text-base md:text-lg font-bold my-auto`}>
+                        Výčetka
+                    </Link>
                 </div>
                 <div className="flex flex-row justify-end my-auto gap-2">
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant="secondary" color="primary" className="rounded-full">
-                              <PanelRightOpen className="scale-150"/>
+                            <Button variant="ghost" color="primary" className="rounded-full">
+                              <Menu className="scale-150"/>
                             </Button>
                         </SheetTrigger>
                         <SheetContent>
                             <SheetHeader>
-                                <SheetTitle>Edit profile</SheetTitle>
+                                <SheetTitle>Výčetka (wv0.0.1)</SheetTitle>
                                 <SheetDescription>
                                     Make changes to your profile here. Click save when you're done.
                                 </SheetDescription>

@@ -1,113 +1,140 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { Alert } from '@/components/ui/alert';
+import { useState, useEffect } from "react"
+import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Card, CardContent } from "@/components/ui/card"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from 'lucide-react'
 
-const DENOMINATIONS: Array<number | '€'> = [2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1, '€'];
-const EURO_RATE = 23;
+type Denomination = {
+    value: number | string
+    count: number
+}
 
-type DenominationType = number | '€';
-type ValueStateType = { [K in DenominationType]?: string };
+export default function BankNoteCalculator() {
+    const initialDenominations: Denomination[] = [
+        { value: 2000, count: 0 },
+        { value: 1000, count: 0 },
+        { value: 500, count: 0 },
+        { value: 200, count: 0 },
+        { value: 100, count: 0 },
+        { value: 50, count: 0 },
+        { value: 20, count: 0 },
+        { value: 10, count: 0 },
+        { value: 5, count: 0 },
+        { value: 2, count: 0 },
+        { value: 1, count: 0 },
+        { value: "€", count: 0 },
+    ]
 
+    const [denominations, setDenominations] = useState<Denomination[]>(initialDenominations)
+    const [total, setTotal] = useState(0)
+    const [revenue, setRevenue] = useState(0)
+    const [warning, setWarning] = useState("")
+    const [isSwitchOn, setIsSwitchOn] = useState(false) // Example switch state for max value condition
 
-export default function Home() {
-    const initialStateValues: ValueStateType = {};
+    useEffect(() => {
+        const newTotal = denominations.reduce((acc, curr) => {
+            if (curr.value === "€") {
+                return acc + curr.count * 23
+            }
+            return acc + (typeof curr.value === 'number' ? curr.value : 0) * curr.count
+        }, 0)
+        setTotal(newTotal)
+        setRevenue(newTotal - 6000)
+    }, [denominations])
 
-    DENOMINATIONS.forEach((denom) => {
-        initialStateValues[denom] = '';
-    });
+    const handleInputChange = (index: number, value: string) => {
+        const maxValue = isSwitchOn ? 500 : 99;
+        if (value === '') {
+            const newDenominations = denominations.map((denom, i) =>
+                i === index ? { ...denom, count: 0 } : denom
+            )
+            setDenominations(newDenominations)
+            return;
+        }
+        const numValue = Number(value);
+        const isNumeric = /^\d+$/.test(value);
 
-    const [values, setValues] = useState(initialStateValues);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isSnackbarVisible, setSnackbarVisible] = useState(false);
-
-    const handleInputChange = (value: string, denom: DenominationType) => {
-        const maxValue = 99;
-
-        if (value === '' || /^\d+$/.test(value)) {
-            const numValue = Number(value);
-
+        if (isNumeric) {
             if (numValue > maxValue) {
-                setErrorMessage(`Množství musí být nižší než ${maxValue}!`);
-                setSnackbarVisible(true);
-                setTimeout(() => setSnackbarVisible(false), 3000);
-
-                setValues((prev) => ({
-                    ...prev,
-                    [denom]: String(maxValue),
-                }));
+                setWarning(`Množství musí být nižší než ${maxValue}!`);
+                const newDenominations = denominations.map((denom, i) =>
+                    i === index ? { ...denom, count: maxValue } : denom
+                )
+                setDenominations(newDenominations);
+                return;
             } else {
-                setErrorMessage('');
-                setSnackbarVisible(false);
-
-                setValues((prev) => ({
-                    ...prev,
-                    [denom]: value,
-                }));
+                setWarning('');
+                const newDenominations = denominations.map((denom, i) =>
+                    i === index ? { ...denom, count: numValue } : denom
+                )
+                setDenominations(newDenominations);
             }
         } else {
-            setErrorMessage('Povoleny jsou pouze čísla!');
-            setSnackbarVisible(true);
-            setTimeout(() => setSnackbarVisible(false), 3000);
+            setWarning('Povoleny jsou pouze čísla!');
         }
-    };
+    }
 
-    const totalAmount = DENOMINATIONS.reduce((total, denom) => {
-        const value = Number(values[denom]) || 0;
-        return total + ((typeof denom === 'number' ? value * denom : value * EURO_RATE));
-    }, 0);
+    const formatCurrency = (value: number) => {
+        return value.toLocaleString("cs-CZ", { style: "currency", currency: "CZK" }).replace(',00', '')
+    }
 
     return (
-        <div className="min-h-screen pt-14 sm:pt-0 p-4 md:p-8 lg:p-12 outline-2 outline-secondary outline rounded-md">
-            <Table className="text-base md:text-lg lg:text-xl">
-                <TableHeader>
-                    <TableRow>
-                        <TableCell className="font-bold !text-center">Bankovky</TableCell>
-                        <TableCell className="font-bold !text-center">Množství</TableCell>
-                        <TableCell className="font-bold !text-center">Částka</TableCell>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {DENOMINATIONS.map((denom) => (
-                        <TableRow key={denom} className="border-b">
-                            <TableCell className="p-3 md:p-4 lg:p-5 !text-center">{denom}</TableCell>
-                            <TableCell className="p-3 md:p-4 lg:p-5">
-                                <Input
-                                    value={values[denom] || ''}
-                                    onChange={(e) => handleInputChange(e.target.value, denom)}
-                                    type="number"
-                                    className="text-center text-base md:text-lg lg:text-xl p-2 md:p-3 lg:p-4 w-1/2 mx-auto"
-                                />
-                            </TableCell>
-                            <TableCell className="p-3 md:p-4 lg:p-5 !text-center">{denom !== '€' ? (Number(values[denom]) || 0) * denom : (Number(values[denom]) || 0) * EURO_RATE} Kč</TableCell>
+        <Card className="w-full max-w-4xl mx-auto pt-16">
+            <CardContent>
+                <Table className="text-base">
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="!text-center">Bankovky</TableHead>
+                            <TableHead className="!text-center">Množství</TableHead>
+                            <TableHead className="!text-center">Celkově</TableHead>
                         </TableRow>
-                    ))}
-                    <TableRow className="border-t-2">
-                        <TableCell className="p-3 md:p-4 lg:p-5 font-bold !text-center" colSpan={2}>
-                            Celkem
-                        </TableCell>
-                        <TableCell className="p-3 md:p-4 lg:p-5 font-bold !text-center">
-                            {totalAmount} Kč
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="border-t">
-                        <TableCell className="p-3 md:p-4 lg:p-5 font-bold !text-center" colSpan={2}>
-                            Celkem - 6000
-                        </TableCell>
-                        <TableCell className="p-3 md:p-4 lg:p-5 font-bold !text-center">
-                            {totalAmount - 6000} Kč
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                        {denominations.map((denom, index) => (
+                            <TableRow key={index}>
+                                <TableCell className="whitespace-nowrap !text-center w-1/3">
+                                    {denom.value === "€" ? "€ (23 CZK)" : formatCurrency(typeof denom.value === 'number' ? denom.value : 0)}
+                                </TableCell>
+                                <TableCell>
+                                    <Input
+                                        type="number"
+                                        min="0"
+                                        max={isSwitchOn ? "500" : "99"}
+                                        value={denom.count === 0 ? '' : denom.count}
+                                        onChange={(e) => handleInputChange(index, e.target.value)}
+                                        className="w-20 mx-auto !text-center text-base"
+                                    />
+                                </TableCell>
+                                <TableCell className="w-1/3 !text-center">
+                                    {formatCurrency(denom.value === "€" ? denom.count * 23 : (typeof denom.value === 'number' ? denom.value : 0) * denom.count)}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
 
-            {isSnackbarVisible && (
-                <Alert variant="destructive" className="mt-4 text-base md:text-lg lg:text-xl">
-                    {errorMessage}
-                </Alert>
-            )}
-        </div>
-    );
+                {warning && (
+                    <Alert variant="destructive" className="mt-4">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Warning</AlertTitle>
+                        <AlertDescription>{warning}</AlertDescription>
+                    </Alert>
+                )}
+
+                <div className="mt-6 space-y-2">
+                    <div className="flex justify-evenly">
+                        <span className="font-semibold">Total:</span>
+                        <span>{formatCurrency(total)}</span>
+                    </div>
+                    <div className="flex justify-evenly">
+                        <span className="font-semibold">Revenue:</span>
+                        <span>{formatCurrency(revenue)}</span>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
 }
