@@ -6,10 +6,11 @@ import localFont from 'next/font/local'
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {Menu, Star} from "lucide-react";
+import {Info, Menu, Star} from "lucide-react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Switch} from "@/components/ui/switch";
 import {useEffect, useState} from "react";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 
 const digitalCards = localFont({
     src: [
@@ -143,7 +144,12 @@ export default function VycetkaHeader() {
                                     </div>
                                 )}
                             </div>
-
+                            <Alert className="w-full border-orange-300 text-orange-300">
+                                <Info className="!text-orange-300" size="20"/>
+                                <AlertDescription>
+                                    Některé funkce webové verze Výčetky jsou stále ve vývoji.
+                                </AlertDescription>
+                            </Alert>
                             <div className="mt-4 text-xs sm:text-sm text-muted-foreground">
                                 Zajímá vás, jak Výčetka funguje? Podívejte se na <a href="#" className="underline">zdrojový
                                 kód</a>.
