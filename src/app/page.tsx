@@ -15,7 +15,7 @@ export default function LandingPage() {
     };
 
     return (
-        <main className="space-y-40 py-16 px-4 md:px-6 lg:px-8">
+        <main className="pt-28 md:pt-4 space-y-40 py-16 px-4 md:px-6 lg:px-8">
             <div className="flex flex-col !text-center gap-8 xl:pt-20">
                 <div className="space-y-4">
                     <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-50 to-gray-200 bg-clip-text text-transparent">

@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import {Stars} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import localFont from 'next/font/local'
+import {useRouter} from "next/navigation";
+import {useTransition} from "react";
+import {ArrowRight, Loader2} from "lucide-react";
 
 const digitalCards = localFont({
     src: [
@@ -16,15 +18,24 @@ const digitalCards = localFont({
 
 export default function Header() {
 
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+
+    const handleButtonPress = () => {
+        startTransition(() => {
+            router.push('/vycetka');
+        });
+    };
+
     return (
-        <header className="hidden fixed sm:block z-50 w-full bg-black">
-            <div className="sticky z-50 flex flex-row justify-evenly p-3">
-                <div className="flex flex-rowjustify-start">
+        <header className="fixed sm:block z-50 w-full bg-black bg-opacity-50 md:bg-opacity-100">
+            <div className="sticky z-50 flex flex-row justify-end sm:justify-evenly p-3">
+                <div className="hidden sm:flex flex-rowjustify-start">
                     <Link href="/" className={`${digitalCards.className} text-lg font-bold my-auto`}>Výčetka</Link>
                 </div>
                 <div className="flex flex-row justify-end my-auto gap-2">
-                    <Button variant="outline" size="default" className="rounded-full">
-                        Co je nového? <Stars size={25}/>
+                    <Button onClick={handleButtonPress} variant="outline" className="rounded-full">
+                        {isPending ? "Načítání" : "Webová verze"} {isPending ? <Loader2 className="animate-spin" /> : <ArrowRight size="20"/>}
                     </Button>
                 </div>
             </div>
