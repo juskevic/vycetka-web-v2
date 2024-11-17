@@ -1,9 +1,11 @@
 'use client';
 import { Button } from "@/components/ui/button";
-import {Download, ArrowRight, CheckCircle, User, Info} from "lucide-react";
+import {Download, ArrowRight, CheckCircle, User, Info, Loader2} from "lucide-react";
 import Image from "next/image";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {useTransition} from "react";
+import {useRouter} from "next/navigation";
 
 export default function LandingPage() {
 
@@ -12,6 +14,15 @@ export default function LandingPage() {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll animation
         }
+    };
+
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+
+    const handleButtonPress = () => {
+        startTransition(() => {
+            router.push('/vycetka');
+        });
     };
 
     return (
@@ -29,8 +40,11 @@ export default function LandingPage() {
                     <Button onClick={handleScrollToSection} variant="default" className="rounded-full">
                         Stáhnout <Download size={25}/>
                     </Button>
-                    <Button variant="secondary" className="rounded-full">
-                        Webová verze <ArrowRight size="20"/>
+                    <Button
+                        onClick={handleButtonPress}
+                        variant={isPending ? "secondary" : "secondary"}
+                        className="rounded-full">
+                        {isPending ? "Načítání" : "Webová verze"} {isPending ? <Loader2 className="animate-spin" /> : <ArrowRight size="20"/>}
                     </Button>
                 </div>
             </div>

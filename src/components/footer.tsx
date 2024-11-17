@@ -13,10 +13,10 @@ export default function Footer() {
                             © {currentYear} Max Juškevič. Všechna práva vyhrazena.
                         </p>
                         <nav className="flex gap-4 text-sm">
-                            <Link href="/privacy" className="underline text-muted-foreground hover:text-primary">
+                            <Link href="/osobni-udaje" className="underline text-muted-foreground hover:text-primary">
                                 Ochrana osobních údajů
                             </Link>
-                            <Link href="/changelog" className="underline text-muted-foreground hover:text-primary">
+                            <Link href="/seznam-zmen" className="underline text-muted-foreground hover:text-primary">
                                 Seznam změn
                             </Link>
                         </nav>

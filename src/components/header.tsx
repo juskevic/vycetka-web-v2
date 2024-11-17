@@ -5,7 +5,7 @@ import {Button} from '@/components/ui/button'
 import localFont from 'next/font/local'
 import {useRouter} from "next/navigation";
 import {useTransition} from "react";
-import {ArrowRight, Loader2} from "lucide-react";
+import {ArrowRight, Loader2, House} from "lucide-react";
 
 const digitalCards = localFont({
     src: [
@@ -27,14 +27,27 @@ export default function Header() {
         });
     };
 
+    const handleHomeButtonPress = () => {
+        startTransition(() => {
+            router.push('/');
+        }
+        )
+    }
+
     return (
-        <header className="fixed sm:block z-50 w-full bg-black bg-opacity-50 md:bg-opacity-100">
+        <header className="fixed sm:block z-50 w-full bg-black">
             <div className="sticky z-50 flex flex-row justify-end sm:justify-evenly p-3">
                 <div className="hidden sm:flex flex-rowjustify-start">
                     <Link href="/" className={`${digitalCards.className} text-lg font-bold my-auto`}>Výčetka</Link>
                 </div>
                 <div className="flex flex-row justify-end my-auto gap-2">
-                    <Button onClick={handleButtonPress} variant="outline" className="rounded-full">
+                    <Button onClick={handleHomeButtonPress} variant="outline" size="icon" className="sm:hidden flex rounded-full">
+                        <House />
+                    </Button>
+                    <Button
+                        onClick={handleButtonPress}
+                        variant={isPending ? "secondary" : "outline"}
+                        className="rounded-full">
                         {isPending ? "Načítání" : "Webová verze"} {isPending ? <Loader2 className="animate-spin" /> : <ArrowRight size="20"/>}
                     </Button>
                 </div>
