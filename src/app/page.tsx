@@ -49,7 +49,7 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            <div className="space-y-12">
+            <div className="hidden space-y-12">
                 <div className="flex flex-row justify-evenly flex-wrap gap-12">
                     {[
                         {
@@ -97,7 +97,7 @@ export default function LandingPage() {
             <div id="download" className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
                 <div className="relative w-full max-w-[300px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl">
                     <Image
-                        src="/placeholder.svg"
+                        src="/iPhone_12_Pro-1731846087011.webp"
                         alt="Výčetka app screenshot"
                         layout="fill"
                         objectFit="cover"
