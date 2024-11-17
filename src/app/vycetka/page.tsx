@@ -5,6 +5,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import ValidatedInput from "@/components/ValidatedInput";
 import { useSettings } from "../../../contexts/SettingsContext";
+import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { RotateCcw } from 'lucide-react';
 
 type Denomination = {
     value: number | string;
@@ -47,6 +50,10 @@ export default function BankNoteCalculator() {
 
     const formatCurrency = (value: number) => {
         return value.toLocaleString("cs-CZ", { style: "currency", currency: "CZK" }).replace(",00", "");
+    };
+
+    const handleReset = () => {
+        setDenominations(initialDenominations); // Reset denominations to initial state
     };
 
     const totalEuro = denominations.find((d) => d.value === "€")?.count || 0;
@@ -108,6 +115,31 @@ export default function BankNoteCalculator() {
                                     : `${formatCurrency(totalSum - parseInt(settings.initialDeposit))}`}
                         </span>
                     </div>
+                </div>
+                <div className="mt-4 mr-4 flex justify-end">
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="outline" className="rounded-full">
+                                Vynulovat <RotateCcw />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Vynulování hodnot</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Opravdu chcete vynulovat zadané hodnoty?
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel className="rounded-full">
+                                    Ne
+                                </AlertDialogCancel>
+                                <AlertDialogAction className="rounded-full" onClick={handleReset}>
+                                    Ano
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </CardContent>
         </Card>

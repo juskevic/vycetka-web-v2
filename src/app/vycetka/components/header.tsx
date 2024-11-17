@@ -144,8 +144,8 @@ export default function VycetkaHeader() {
                                 </AlertDescription>
                             </Alert>
                             <div className="mt-4 text-xs sm:text-sm text-muted-foreground">
-                                Zajímá vás, jak Výčetka funguje? Podívejte se na <a href="#" className="underline">zdrojový
-                                kód</a>.
+                                Zajímá vás, jak Výčetka funguje? Podívejte se na <Link href="https://github.com/juskevic/vycetka-web-v2/blob/master/src/app/vycetka/page.tsx" className="underline">zdrojový
+                                kód</Link>.
                             </div>
                         </SheetContent>
                     </Sheet>
