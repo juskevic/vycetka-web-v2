@@ -69,6 +69,7 @@ export default function VycetkaHeader() {
                                         Zobrazit zvlášť Euro v tržbě
                                     </Label>
                                     <Switch
+                                        disabled
                                         id="display-euro"
                                         checked={settings.displayEuroSeparately}
                                         onCheckedChange={(checked) =>
