@@ -14,8 +14,14 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-    title: "Výčetka | Max Juškevič - Online kalkulačka bankovek",
+    title: "Výčetka | Max Juškevič",
     description: "Výčetka je moderní a snadno použitelná online kalkulačka bankovek. Ideální pro správu hotovosti, výpočty celkových částek a zajištění přesnosti. Navrhl Max Juškevič.",
+    icons: {
+        icon: '/favicon.ico',
+    },
+    creator: "Max Juškevič",
+    publisher: "Max Juškevič",
+    category: 'technology',
     keywords: [
         "Výčetka",
         "kalkulačka bankovek",
@@ -28,26 +34,25 @@ export const metadata: Metadata = {
     ],
     robots: "index, follow",
     openGraph: {
-        title: "Výčetka | Max Juškevič - Online kalkulačka bankovek",
+        title: "Výčetka | Max Juškevič",
         description: "Spravujte svou hotovost a počítejte celkové částky snadno pomocí Výčetky, moderní kalkulačky bankovek navržené pro přesnost a jednoduchost.",
-        url: "https://tvadomena.cz/vycetka",
+        url: "https://vycetka.juskevic.com",
         type: "website",
         locale: "cs_CZ",
         images: [
             {
-                url: "https://tvadomena.cz/images/vycetka-preview.png",
+                url: "https://vycetka.juskevic.com/public/GraphicFeature.webp",
                 width: 1200,
-                height: 630,
                 alt: "Výčetka - Online kalkulačka bankovek",
+                height: 630,
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Výčetka | Max Juškevič - Online kalkulačka bankovek",
+        title: "Výčetka | Max Juškevič",
         description: "Počítejte své celkové částky snadno pomocí Výčetky, moderní a uživatelsky přívětivé online kalkulačky bankovek.",
-        images: ["https://tvadomena.cz/images/vycetka-preview.png"],
-        site: "@tvuj_twitter_handle",
+        images: ["https://vycetka.juskevic.com/public/GraphicFeature.webp"]
     },
 };
 
