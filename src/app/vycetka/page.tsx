@@ -34,18 +34,18 @@ export default function BankNoteCalculator() {
     const [revenue, setRevenue] = useState(0);
 
     useEffect(() => {
-        const euroRate = parseFloat(settings.euroRate) || 1; // Use Euro rate from settings
+        const euroRate = parseFloat(settings.euroRate) || 1;
         const euroValue = denominations.find((d) => d.value === "€")?.count || 0;
         const euroContribution = euroValue * euroRate;
 
         const newTotal = denominations.reduce((acc, curr) => {
-            if (curr.value === "€") return acc; // Skip Euro here; it's added separately
+            if (curr.value === "€") return acc;
             return acc + (typeof curr.value === "number" ? curr.value : 0) * curr.count;
-        }, euroContribution); // Include the Euro contribution separately here
+        }, euroContribution);
 
-        const initialDeposit = parseInt(settings.initialDeposit || "6000", 10); // Use initial deposit from settings
-        setTotal(newTotal); // Total includes Euro contribution
-        setRevenue(newTotal - euroContribution - initialDeposit); // Revenue excludes the Euro contribution
+        const initialDeposit = parseInt(settings.initialDeposit || "6000", 10);
+        setTotal(newTotal);
+        setRevenue(newTotal - euroContribution - initialDeposit);
     }, [denominations, settings]);
 
     const formatCurrency = (value: number) => {
@@ -100,14 +100,14 @@ export default function BankNoteCalculator() {
                     <div className="flex text-center justify-evenly">
                         <span className="font-semibold w-1/2">Celkově</span>
                         <span className="w-1/2">
-                            {formatCurrency(total)} {/* Includes Euro */}
+                            {formatCurrency(total)}
                         </span>
                     </div>
                     <div className="flex text-center justify-evenly">
                         <span className="font-semibold w-1/2">Tržba</span>
                         <span className="w-1/2">
                             {totalEuro > 0
-                                ? `${formatCurrency(revenue)} + ${totalEuro} €` // Revenue excludes Euro value
+                                ? `${formatCurrency(revenue)} + ${totalEuro} €`
                                 : `${formatCurrency(revenue)}`}
                         </span>
                     </div>
