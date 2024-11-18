@@ -71,7 +71,3 @@ This page serves as the **landing page** for the Výčetka project and also as t
 ### Autor / Author
 Max Juškevič
 
----
-
-### Licence / License
-MIT
