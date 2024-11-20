@@ -120,8 +120,11 @@ export default function LandingPage() {
                     <Button disabled={true} variant="default" className="text-base rounded-full w-full md:w-2/3">
                         App Store <Download className="ml-2" size={20}/>
                     </Button>
-                    <Button variant="outline" className="text-base rounded-full w-full md:w-2/3">
-                        Webová verze <ArrowRight size="20"/>
+                    <Button
+                        onClick={handleButtonPress}
+                        variant={isPending ? "secondary" : "secondary"}
+                        className="rounded-full w-full md:w-2/3 text-base">
+                        {isPending ? "Načítání" : "Webová verze"} {isPending ? <Loader2 className="animate-spin" /> : <ArrowRight size="20"/>}
                     </Button>
                 </div>
             </div>
