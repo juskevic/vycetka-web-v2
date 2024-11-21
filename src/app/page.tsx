@@ -26,7 +26,7 @@ export default function LandingPage() {
     };
 
     return (
-        <main className="pt-28 md:pt-4 space-y-40 py-16 px-4 md:px-6 lg:px-8">
+        <main className="pt-28 md:pt-16 space-y-40 py-16 px-4 md:px-6 lg:px-8">
             <div className="flex flex-col !text-center gap-8 xl:pt-20">
                 <div className="space-y-4">
                     <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-50 to-gray-200 bg-clip-text text-transparent">
@@ -95,9 +95,9 @@ export default function LandingPage() {
             </div>
 
             <div id="download" className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
-                <div className="relative w-full max-w-[300px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl">
+                <div className="relative w-full max-w-[300px] aspect-[9/16] rounded-3xl overflow-hidden">
                     <Image
-                        src="/iPhone_12_Pro-1731846087011.webp"
+                        src="/vycetka_googleplay2.webp"
                         alt="Výčetka app screenshot"
                         layout="fill"
                         objectFit="cover"

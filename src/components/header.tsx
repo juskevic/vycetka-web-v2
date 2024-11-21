@@ -35,7 +35,7 @@ export default function Header() {
     }
 
     return (
-        <header className="fixed sm:block z-50 w-full bg-black">
+        <header className="fixed sm:block z-50 w-full bg-black border-b border-b-secondary">
             <div className="sticky z-50 flex flex-row justify-end sm:justify-evenly p-3">
                 <div className="hidden sm:flex flex-rowjustify-start">
                     <Link href="/" className={`${digitalCards.className} text-lg font-bold my-auto`}>Výčetka</Link>

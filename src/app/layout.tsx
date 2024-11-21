@@ -61,7 +61,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     return (
         <html lang="cs">
         <SettingsProvider>
-            <body className="dark">
+            <body className="dark bg-black">
             <DynamicHeader/>
             <div className="xl:p-20">
                 {children}
