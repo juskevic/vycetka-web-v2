@@ -11,7 +11,7 @@
 import { useState, useEffect } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
-import ValidatedInput from "@/components/ValidatedInput";
+import ValidatedInput from "@/app/vycetka/components/ValidatedInput";
 import { useSettings } from "../../../contexts/SettingsContext";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -107,7 +107,7 @@ export default function BankNoteCalculator() {
                         {/* Iterace přes každý nominál k zobrazení v tabulce */}
                         {denominations.map((denom, index) => (
                             <TableRow key={index}>
-                                <TableCell className="whitespace-nowrap !text-center w-1/3">
+                                <TableCell className="whitespace-nowrap !text-center w-1/3 sm:text-lg">
                                     {/* Display the denomination value, formatted appropriately */}
                                     {/* Zobrazte hodnotu nominálu, správně naformátovanou */}
                                     {denom.value === "€"
@@ -132,7 +132,7 @@ export default function BankNoteCalculator() {
                                         }}
                                     />
                                 </TableCell>
-                                <TableCell className="w-1/3 !text-center">
+                                <TableCell className="w-1/3 !text-center sm:text-lg">
                                     {/* Display the total value for the given denomination */}
                                     {/* Zobrazte celkovou hodnotu pro daný nominál */}
                                     {formatCurrency(

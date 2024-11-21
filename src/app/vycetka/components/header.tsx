@@ -46,7 +46,7 @@ export default function VycetkaHeader() {
                         </SheetTrigger>
                         <SheetContent className="w-3/4 sm:max-w-md">
                             <SheetHeader>
-                                <SheetTitle className="text-xl sm:text-2xl">Výčetka (wv0.0.1)</SheetTitle>
+                                <SheetTitle className="text-xl sm:text-2xl">Výčetka (wv0.0.2)</SheetTitle>
                                 <SheetDescription className="text-sm sm:text-base">
                                     Změny se ukládají automaticky.
                                 </SheetDescription>
@@ -65,7 +65,7 @@ export default function VycetkaHeader() {
                                     />
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                    <Label htmlFor="display-euro" className="text-sm sm:text-base">
+                                    <Label htmlFor="display-euro" className="text-sm sm:text-base text-neutral-700">
                                         Zobrazit zvlášť Euro v tržbě
                                     </Label>
                                     <Switch
@@ -76,6 +76,12 @@ export default function VycetkaHeader() {
                                             handleSettingChange("displayEuroSeparately", checked)
                                         }
                                     />
+                                </div>
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <Label htmlFor="christmas-theme" className="text-sm sm:text-base text-neutral-700">
+                                        Vánoční tématika
+                                    </Label>
+                                    <Switch disabled/>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <Label htmlFor="euro-rate" className="text-sm sm:text-base">
@@ -92,7 +98,8 @@ export default function VycetkaHeader() {
                                         <SelectContent>
                                             {[20, 21, 22, 23, 24, 25, 26, 27].map((rate) => (
                                                 <SelectItem key={rate} value={rate.toString()}>
-                                                    {rate}
+                                                    {rate} {[23].includes(rate) &&
+                                                    <Star className="inline h-3 w-3 mb-1"/>}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -144,7 +151,9 @@ export default function VycetkaHeader() {
                                 </AlertDescription>
                             </Alert>
                             <div className="mt-4 text-xs sm:text-sm text-muted-foreground">
-                                Zajímá vás, jak Výčetka funguje? Podívejte se na <Link href="https://github.com/juskevic/vycetka-web-v2/blob/master/src/app/vycetka/page.tsx" className="underline" target="_blank">zdrojový
+                                Zajímá vás, jak Výčetka funguje? Podívejte se na <Link
+                                href="https://github.com/juskevic/vycetka-web-v2/blob/master/src/app/vycetka/page.tsx"
+                                className="underline" target="_blank">zdrojový
                                 kód</Link>.
                             </div>
                         </SheetContent>

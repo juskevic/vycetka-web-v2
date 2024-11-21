@@ -55,7 +55,7 @@ const ValidatedInput: React.FC<ValidatedInputProps> = ({ value, maxValue, onChan
             type="text"
             value={value === 0 ? "" : value} // Show an empty string if the value is 0
             onChange={handleValidation}
-            className="w-20 mx-auto !text-center text-base"
+            className="w-20 mx-auto !text-center sm:text-lg"
         />
     );
 };

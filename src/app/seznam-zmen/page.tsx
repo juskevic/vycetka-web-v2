@@ -47,6 +47,15 @@ export default function Component() {
 
     const webChangelogData: ChangelogData = [
         {
+            version: "wv0.0.2",
+            date: "21. 11. 2024",
+            changes: [
+                "Změna mobilního náhledového obrázku",
+                "Přidáno tlačítko „Vánoční tématika“ (není funkční)",
+                "Změna barvy pozadí hlavní stránky na černou",
+            ],
+        },
+        {
             version: "wv0.0.1",
             date: "17. 11. 2024",
             changes: [
